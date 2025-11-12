@@ -1,0 +1,13 @@
+entrypoint="index.html"
+hidden=[".config"]
+modules = ["nodejs-20", "web"]
+
+[nix]
+channel = "stable-25_05"
+
+[deployment]
+publicDir = "/"
+deploymentTarget = "static"
+
+[agent]
+expertMode = true
