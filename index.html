@@ -1,19 +1,27 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>repl.it</title>
-  </head>
-  <body>
-    <div>
-      <button id="example">example</button>
-      <button id="cw1">cw1</button>
-      <button id="cw2">cw2</button>
-      <button id="cw3">cw3</button>
-    </div>
-    <div id="answer">
-    </div>
-    <script src="script.js"></script>
-  </body>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>NOAA Stacje pogodowe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Dane stacji pogodowych NOAA</h1>
+
+  <button onclick="getStations()">Pobierz dane</button>
+
+  <p id="message"></p>
+
+  <table id="table" border="1" hidden>
+    <tr>
+      <th>Station ID</th>
+      <th>Name</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+    </tr>
+    <tbody id="tbody"></tbody>
+  </table>
+
+  <script src="script.js"></script>
+</body>
 </html>

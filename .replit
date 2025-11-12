@@ -1,13 +1,57 @@
 entrypoint="index.html"
+
 hidden=[".config"]
-modules = ["nodejs-20", "web"]
+
+modules = ["web", "python-3.11"]
+
 
 [nix]
-channel = "stable-25_05"
+
+channel = "stable-23_11"
+
 
 [deployment]
+
 publicDir = "/"
+
 deploymentTarget = "static"
 
-[agent]
-expertMode = true
+
+[workflows]
+runButton = "Project"
+
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "WebServer"
+
+
+[[workflows.workflow]]
+name = "WebServer"
+author = "agent"
+
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python3 -m http.server 5000"
+waitForPort = 5000
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
+localPort = 38285
+externalPort = 3001
+
+[[ports]]
+localPort = 40667
+externalPort = 3000
