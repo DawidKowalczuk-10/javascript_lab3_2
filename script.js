@@ -1,6 +1,9 @@
-const API_TOKEN = "PkqtMxRpmNYCBUbVRtYxDUjxAOMKtBAXI";  
+const API_TOKEN = "PkqtMxRpmNYCBUbVRtYxDUjxAOMKtBAX";  
 
-async function getStations() {
+
+const NOAA_URL = "https://www.ncei.noaa.gov/cdo-web/api/v2/#datatypes";
+
+async function getDataTypes() {
   const message = document.getElementById("message");
   const table = document.getElementById("table");
   const tbody = document.getElementById("tbody");
@@ -11,42 +14,38 @@ async function getStations() {
     return;
   }
 
-  message.textContent = "Pobieranie danych...";
+  message.textContent = "⏳ Pobieranie danych...";
   table.hidden = true;
   tbody.innerHTML = "";
 
   try {
-    const apiUrl = "https://www.ncei.noaa.gov/cdo-web/api/v2/stations?limit=25";
-    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(apiUrl)}`;
-    
-    const res = await fetch(proxyUrl, {
-      headers: { 'token': API_TOKEN }
+    const res = await fetch(NOAA_URL, {
+      headers: { token: API_TOKEN }
     });
 
-    if (!res.ok) throw new Error("Błąd HTTP: " + res.status);
+    if (!res.ok) throw new Error("HTTP " + res.status);
 
     const data = await res.json();
-    const stations = data.results || [];
+    const types = data.results || [];
 
-    if (stations.length === 0) {
-      message.textContent = "Brak danych o stacjach.";
+    if (types.length === 0) {
+      message.textContent = "Brak danych do wyświetlenia.";
       return;
     }
 
-    stations.forEach(st => {
+    types.forEach(t => {
       const row = `<tr>
-        <td>${st.id}</td>
-        <td>${st.name || "-"}</td>
-        <td>${st.latitude || "-"}</td>
-        <td>${st.longitude || "-"}</td>
+        <td>${t.id}</td>
+        <td>${t.name || "-"}</td>
+        <td>${t.description || "-"}</td>
       </tr>`;
       tbody.innerHTML += row;
     });
 
     table.hidden = false;
-    message.textContent = `Załadowano ${stations.length} stacji.`;
+    message.textContent = `✅ Załadowano ${types.length} rekordów.`;
   } catch (err) {
     console.error(err);
-    message.textContent = "Wystąpił błąd podczas pobierania danych.";
+    message.textContent = "❌ Błąd: " + err.message;
   }
 }

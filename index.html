@@ -2,23 +2,24 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <title>NOAA Stacje pogodowe</title>
+  <title>NOAA – Dane typu DataTypes</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Dane stacji pogodowych NOAA</h1>
+  <h1>Dane typu <code>/datatypes</code> z NOAA API</h1>
 
-  <button onclick="getStations()">Pobierz dane</button>
+  <button onclick="getDataTypes()">Pobierz dane</button>
 
   <p id="message"></p>
 
   <table id="table" border="1" hidden>
-    <tr>
-      <th>Station ID</th>
-      <th>Name</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
-    </tr>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nazwa</th>
+        <th>Opis</th>
+      </tr>
+    </thead>
     <tbody id="tbody"></tbody>
   </table>
 
